@@ -1,0 +1,101 @@
+instructions:
+	jump -0
+		jumps to the addres after to the number
+		exampel
+			jump
+			4
+	jumpif - 1:
+		jumps if the adres after dose not equal 0 to addres 1
+		exampel
+			jump if
+			0 //checks if the number at adres 0 dose not equal 0
+			6 //if true jumps to this adres, else it jumps three adreses forward
+	compare - 2:
+		compares the to numbers with the addres after and sets to 3'd addres
+		exampel
+			compare
+			0 //compare number a
+			1 //compare number b
+			2 //sets it to 1 if the numbers are the same, eles it set it to 0
+	add - 3
+		adds the to numbers with the addres after and set the resolts to the 3'd address
+		exampel
+			add
+			0 //first number
+			1 //second number
+			2 //where the resolts is
+	sub - 4
+		subtracts the to numbers with the addres after and set the resolts to the 3'd address
+		exampel
+			sub
+			0 
+			1
+			2
+	mul - 5
+		multiply the to numbers with the addres after and set the resolts to the 3'd address
+		exampel
+			mul
+			0
+			1
+			2
+	div - 6
+		divides the to numbers with the addres after and set the resolts to the 3'd address
+		exampel
+			div
+			0
+			1
+			2
+	clone - 7
+		copys a number/addres/instruction at the first addres to the other adress 
+		exampel
+			clone
+			0 //where the number to clone is
+			1 //where to clone the number
+	print - 8
+		prints the letter in the addres
+		exampel
+			asceCode: a
+			print
+			0 // what to print
+
+
+#
+-
+
+fizzbuzz:
+
+0: 
+1: 
+2: 
+3: 
+4:
+5:
+6:
+7:
+8:
+9:
+10:
+11:
+12:
+13:
+14:
+15:
+16:
+17:
+18:
+19:
+20:
+21:
+22:
+23:
+24:
+25:
+26:
+27:
+28:
+29: 
+30: 
+31: 1
+32: 0
+
+

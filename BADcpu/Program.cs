@@ -1,0 +1,268 @@
+﻿using System;
+using System.IO;
+
+namespace BADcpu
+{
+    internal class Program
+    {
+        public static bool start;
+        public static Cpu cpu;
+
+        static void Main(string[] args)
+        {
+            Console.WriteLine("welcome to the bcis virtual cpu.");
+            Console.WriteLine("this uses the bad cpu instruction set(bcis) instruction set. \ncheck documantation for more information.\n");
+
+            start = true;
+            while (start)
+                updateComand();
+        }
+
+        private static void updateComand()
+        {
+            string comand = Console.ReadLine();
+            if(comand == "stop" || comand == "end")
+            {
+                start = false;
+            }
+            if (comand == "new")
+            {
+                cpu = new Cpu(64);
+                return;
+            }
+            if (comand == "load")
+            {
+                if(cpu == null)
+                {
+                    Console.WriteLine("cpu not created!");
+                    return;
+                }
+
+                Console.WriteLine("file:");
+                string path = Console.ReadLine();
+
+                cpu.setAsembly(readFile(path));
+            }
+
+            if (comand == "run")
+            {
+                if (cpu == null)
+                {
+                    Console.WriteLine("cpu not created!");
+                    return;
+                }
+
+                for (int i = 0; i < 256; i++)
+                    cpu.cpuCycel();
+            }
+
+            if (comand == "reset")
+            {
+                if (cpu == null)
+                {
+                    Console.WriteLine("cpu not created!");
+                    return;
+                }
+
+                cpu.CpuAdres = 0;
+            }
+        }
+
+        private static string[] readFile(string path)
+        {
+            return (File.ReadAllLines(path));
+        }
+    }
+
+    public class Cpu
+    {
+        #region api
+
+        public int[] Ram;
+        public int CpuAdres;
+
+        public void setInstruction(int[] _ram)
+        {
+            Ram = _ram;
+        }
+
+        public Cpu(int ramSize)
+        {
+            Ram = new int[ramSize];
+        }
+
+        public void cpuCycel()
+        {
+            int ins = readRam(CpuAdres);
+            //Console.WriteLine($"it's at addres {CpuAdres} and the instruction is {ins}");
+            if (ins == 0)
+                jumpIns();
+            if (ins == 1)
+                jumpIfIns();
+            if (ins == 2)
+                compareIns();
+            if (ins == 3)
+                addIns();
+            if (ins == 4)
+                subIns();
+            if (ins == 5)
+                divIns();
+            if (ins == 6)
+                mulIns();
+            if (ins == 7)
+                cloneIns();
+            if (ins == 8)
+                printIns();
+
+            if (ins > 8)
+                jumpForward(1);
+            if (ins < 0)
+                jumpForward(1);
+        }
+
+        #endregion
+
+        #region function
+
+        private int readRam(int addres)
+        {
+            if(addres + 1 > Ram.Length)
+                return 0;
+            return Ram[addres];
+        }
+
+        private int readAddres(int addres)
+        {
+            return readRam(readRam(addres));
+        }
+
+        private void setRam(int addres, int value)
+        {
+            if (addres + 1 > Ram.Length)
+                return;
+            Ram[addres] = value;
+        }
+
+        private void jump(int adres)
+        {
+            CpuAdres = adres;
+        }
+
+        #endregion
+
+        #region instruction
+
+        private void jumpForward(int count)
+        {
+            jump(CpuAdres + count);
+        }
+
+        private void jumpIns()
+        {
+            jump(readRam(CpuAdres + 1));
+            return;
+        }
+
+        private void jumpIfIns()
+        {
+            if (readAddres(CpuAdres + 1) != 0)
+                jump(CpuAdres + 2);
+            else
+                jumpForward(3);
+            return;
+        }
+
+        private void compareIns()
+        {
+            if (readAddres(CpuAdres + 1) == readAddres(CpuAdres + 2))
+                setRam(CpuAdres + 3, 1);
+            else
+                setRam(CpuAdres + 3, 0);
+            jumpForward(4);
+            return;
+        }
+
+        private void addIns()
+        {
+            setRam(readRam(CpuAdres + 3), readAddres(CpuAdres + 1) + readAddres(CpuAdres + 2));
+            jumpForward(4);
+            return;
+        }
+
+        private void subIns()
+        {
+            setRam(readRam(CpuAdres + 3), readAddres(CpuAdres + 1) - readAddres(CpuAdres + 2));
+            jumpForward(4);
+            return;
+        }
+
+        private void mulIns()
+        {
+            setRam(readRam(CpuAdres + 3), readAddres(CpuAdres + 1) * readAddres(CpuAdres + 2));
+            jumpForward(4);
+            return;
+        }
+
+        private void divIns()
+        {
+            setRam(readRam(CpuAdres + 3), readAddres(CpuAdres + 1) / readAddres(CpuAdres + 2));
+            jumpForward(4);
+            return;
+        }
+
+        private void cloneIns()
+        {
+            setRam(readRam(CpuAdres + 2), readAddres(CpuAdres + 1));
+            jumpForward(3);
+            return;
+        }
+
+        private void printIns()
+        {
+            Console.WriteLine($"{readAddres(CpuAdres + 1)}");
+            jumpForward(2);
+            return;
+        }
+
+        #endregion
+
+        #region asemblyCompilation
+
+        public void setAsembly(string[] file)
+        {
+            int[] lines = new int[file.Length];
+            Dictionary<string, int> varibles = new Dictionary<string, int>();
+            for (int p = 0; p < file.Length; p++)
+            {
+                lines[p] = compileLine(file[p], file, ref varibles, p);
+            }
+
+            setInstruction(lines);
+        }
+
+        private int compileLine(string line, string[] other, ref Dictionary<string, int> varibles, int addres)
+        {
+            if (line == "jump")
+                return 0;
+            if (line == "jumpif")
+                return 1;
+            if (line == "compare")
+                return 2;
+            if (line == "add")
+                return 3;
+            if (line == "sub")
+                return 4;
+            if (line == "mul")
+                return 5;
+            if (line == "div")
+                return 6;
+            if (line == "clone")
+                return 7;
+            if (line == "print")
+                return 8;
+            return (Convert.ToInt32(line));
+        }
+
+        #endregion
+    }
+}

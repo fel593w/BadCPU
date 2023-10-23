@@ -27,6 +27,11 @@ namespace BADcpu
             }
             if (comand == "new")
             {
+                if(cpu != null){
+                    Console.WriteLine("do you want to override the old cpu?");
+                     if (Console.ReadLine() != "y")
+                        return;
+                }
                 cpu = new Cpu(64);
                 return;
             }
@@ -65,6 +70,11 @@ namespace BADcpu
                 }
 
                 cpu.CpuAdres = 0;
+            }
+            
+            if (command == "read"){
+                foreach (int adr in cpu.Ram)
+                    Console.WriteLine(adr);
             }
         }
 

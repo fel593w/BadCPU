@@ -185,9 +185,9 @@ namespace BADcpu
         private void compareIns()
         {
             if (readAddres(CpuAdres + 1) == readAddres(CpuAdres + 2))
-                setRam(CpuAdres + 3, 1);
+                setRam(readRam(CpuAdres + 3), 1);
             else
-                setRam(CpuAdres + 3, 0);
+                setRam(readRam(CpuAdres + 3), 0);
             jumpForward(4);
             return;
         }

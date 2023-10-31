@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\my games\\.NET\\Engen\\BADcpu\\BADcpu\\BADcpu.csproj",
+      "projectUniqueName": "C:\\my games\\github\\CPU\\BadCPU\\BADcpu\\BADcpu.csproj",
       "projectName": "BADcpu",
-      "projectPath": "C:\\my games\\.NET\\Engen\\BADcpu\\BADcpu\\BADcpu.csproj",
+      "projectPath": "C:\\my games\\github\\CPU\\BadCPU\\BADcpu\\BADcpu.csproj",
       "packagesPath": "C:\\Users\\felix\\.nuget\\packages\\",
-      "outputPath": "C:\\my games\\.NET\\Engen\\BADcpu\\BADcpu\\obj\\",
+      "outputPath": "C:\\my games\\github\\CPU\\BadCPU\\BADcpu\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\felix\\AppData\\Roaming\\NuGet\\NuGet.Config",

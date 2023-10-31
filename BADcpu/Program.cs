@@ -73,8 +73,18 @@ namespace BADcpu
             }
             
             if (comand == "read"){
+
+                int i = 0;
                 foreach (int adr in cpu.Ram)
-                    Console.WriteLine(adr);
+                {
+                    Console.Write(adr);
+
+                    if (i == cpu.CpuAdres)
+                        Console.Write("<");
+
+                    Console.Write("\n");
+                    i++;
+                }
             }
         }
 

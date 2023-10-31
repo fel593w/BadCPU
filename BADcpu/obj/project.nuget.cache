@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "OLfzlebJ3MDc2GCmIXAMhcEiizV+ovEYJtfLfl4jGcAVJGceldT5BKa98m8GkCQAVQ5vavhvv3UCOuj3fPiSGw==",
+  "dgSpecHash": "MZXIs/tfjJ23LeuyxSDbON921c5Lg0kyQmVY4AflehRJHMkBxoam5LrPzKCyELB+OhxkRXUz0MyDUSIBIfIgJg==",
   "success": true,
-  "projectFilePath": "C:\\my games\\.NET\\Engen\\BADcpu\\BADcpu\\BADcpu.csproj",
+  "projectFilePath": "C:\\my games\\github\\CPU\\BadCPU\\BADcpu\\BADcpu.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

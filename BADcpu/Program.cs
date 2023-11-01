@@ -299,9 +299,9 @@ static class bcisCompiler
         if (line.ToArray().Contains('#'))
         {
             if(!varibles.ContainsKey(line.Remove(0)))
-                varibles.Add(removeFirst(line), adress);
+                varibles.Add(getVarName(line), adress);
 
-            return ("0");
+            return (getValue(line));
         }
         return (line);
     }
@@ -310,19 +310,36 @@ static class bcisCompiler
     {
         if (line.ToArray().Contains('@'))
         {
-            if (varibles.ContainsKey(removeFirst(line)))
-                return varibles[removeFirst(line)].ToString();
+            if (varibles.ContainsKey(getVarName(line)))
+                return varibles[getVarName(line)].ToString();
             else
-                return "+";
+                return "0";
         }
         return (line);
     }
 
-    private static string removeFirst(string _varName)
+    private static string getVarName(string _varName)
     {
         string varName = "";
-        for (int i = 1; i < _varName.ToArray().Length; i++)
+        bool isCounted = false;
+        for (int i = 0; i < _varName.ToArray().Length; i++)
         {
+            if(isCounted)
+                varName += _varName[i];
+            if (_varName[i] == '#' || _varName[i] == '@')
+                isCounted = true;
+        }
+
+        return (varName);
+    }
+
+    private static string getValue(string _varName)
+    {
+        string varName = "";
+        for (int i = 0; i < _varName.ToArray().Length; i++)
+        {
+            if (_varName[i] == '#')
+                return (varName);
             varName += _varName[i];
         }
 
@@ -351,6 +368,12 @@ static class bcisCompiler
             return 8;
         if (line == "skip")
             return 9;
+        if (line == "out")
+            return 10;
+        if (line == "in")
+            return 11;
+        if (line == "")
+            return 0;
         return (Convert.ToInt32(line));
     }
 }

@@ -1,0 +1,10 @@
+add#start
+@adder
+@count
+@count
+print
+@count
+jump
+@start
+1#adder
+#count

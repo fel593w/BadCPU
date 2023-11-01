@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\my games\\github\\CPU\\BadCPU\\BADcpu\\BADcpu.csproj",
+      "projectUniqueName": "D:\\github\\cpu\\BadCPU\\BADcpu\\BADcpu.csproj",
       "projectName": "BADcpu",
-      "projectPath": "C:\\my games\\github\\CPU\\BadCPU\\BADcpu\\BADcpu.csproj",
+      "projectPath": "D:\\github\\cpu\\BadCPU\\BADcpu\\BADcpu.csproj",
       "packagesPath": "C:\\Users\\felix\\.nuget\\packages\\",
-      "outputPath": "C:\\my games\\github\\CPU\\BadCPU\\BADcpu\\obj\\",
+      "outputPath": "D:\\github\\cpu\\BadCPU\\BADcpu\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\felix\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -51,8 +51,7 @@
           "net47",
           "net471",
           "net472",
-          "net48",
-          "net481"
+          "net48"
         ],
         "assetTargetFallback": true,
         "warn": true,
@@ -61,7 +60,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.302\\RuntimeIdentifierGraph.json"
       }
     }
   }

@@ -135,8 +135,10 @@ namespace BADcpu
                 cloneIns();
             if (ins == 8)
                 printIns();
+            if (ins == 9)
+                skipIns();
 
-            if (ins > 8)
+            if (ins > 9)
                 jumpForward(1);
             if (ins < 0)
                 jumpForward(1);
@@ -246,11 +248,17 @@ namespace BADcpu
             return;
         }
 
+        private void skipIns()
+        {
+            jumpForward(1);
+            return;
+        }
+
         #endregion
 
         #region asemblyCompilation
 
- 
+
 
         #endregion
     }
@@ -341,6 +349,8 @@ static class bcisCompiler
             return 7;
         if (line == "print")
             return 8;
+        if (line == "skip")
+            return 9;
         return (Convert.ToInt32(line));
     }
 }

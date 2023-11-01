@@ -57,6 +57,10 @@ instructions:
 			asceCode: a
 			print
 			0 // what to print
+	skip - 9
+		skips the instruction
+		exampel
+			skip 
 
 
 #

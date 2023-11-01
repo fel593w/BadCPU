@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 
 namespace BADcpu
@@ -46,7 +47,7 @@ namespace BADcpu
                 Console.WriteLine("file:");
                 string path = Console.ReadLine();
 
-                cpu.setAsembly(readFile(path));
+                cpu.setInstruction(bcisCompiler.compile(readFile(path)));
             }
 
             if (comand == "run")
@@ -90,7 +91,8 @@ namespace BADcpu
 
         private static string[] readFile(string path)
         {
-            return (File.ReadAllLines(path));
+            string[] file = File.ReadAllLines(path);
+            return file;
         }
     }
 
@@ -248,41 +250,97 @@ namespace BADcpu
 
         #region asemblyCompilation
 
-        public void setAsembly(string[] file)
-        {
-            int[] lines = new int[file.Length];
-            Dictionary<string, int> varibles = new Dictionary<string, int>();
-            for (int p = 0; p < file.Length; p++)
-            {
-                lines[p] = compileLine(file[p], file, ref varibles, p);
-            }
-
-            setInstruction(lines);
-        }
-
-        private int compileLine(string line, string[] other, ref Dictionary<string, int> varibles, int addres)
-        {
-            if (line == "jump")
-                return 0;
-            if (line == "jumpif")
-                return 1;
-            if (line == "compare")
-                return 2;
-            if (line == "add")
-                return 3;
-            if (line == "sub")
-                return 4;
-            if (line == "mul")
-                return 5;
-            if (line == "div")
-                return 6;
-            if (line == "clone")
-                return 7;
-            if (line == "print")
-                return 8;
-            return (Convert.ToInt32(line));
-        }
+ 
 
         #endregion
+    }
+}
+
+static class bcisCompiler
+{
+    public static int[] compile(string[] file)
+    {
+        int[] lines = new int[file.Length];
+
+        Dictionary<string, int> varibles = new Dictionary<string, int>();
+        setVars(ref varibles, file);
+
+        for (int p = 0; p < file.Length; p++)
+        {
+            lines[p] = compileLine(file[p], file, ref varibles, p);
+        }
+
+        return(lines);
+    }
+
+    private static void setVars(ref Dictionary<string, int> varibles, string[] file)
+    {
+        for (int p = 0; p < file.Length; p++)
+        {
+            file[p] = getVarAdress(ref varibles, file[p], p);
+        }
+
+        for (int p = 0; p < file.Length; p++)
+        {
+            file[p] = setVarAddress(ref varibles, file[p]);
+        }
+    }
+
+    private static string getVarAdress(ref Dictionary<string, int> varibles, string line, int adress)
+    {
+        if (line.ToArray().Contains('#'))
+        {
+            if(!varibles.ContainsKey(line.Remove(0)))
+                varibles.Add(removeFirst(line), adress);
+
+            return ("0");
+        }
+        return (line);
+    }
+
+    private static string setVarAddress(ref Dictionary<string, int> varibles, string line)
+    {
+        if (line.ToArray().Contains('@'))
+        {
+            if (varibles.ContainsKey(removeFirst(line)))
+                return varibles[removeFirst(line)].ToString();
+            else
+                return "+";
+        }
+        return (line);
+    }
+
+    private static string removeFirst(string _varName)
+    {
+        string varName = "";
+        for (int i = 1; i < _varName.ToArray().Length; i++)
+        {
+            varName += _varName[i];
+        }
+
+        return (varName);
+    }
+
+    private static int compileLine(string line, string[] other, ref Dictionary<string, int> varibles, int addres)
+    {
+        if (line == "jump")
+            return 0;
+        if (line == "jumpif")
+            return 1;
+        if (line == "compare")
+            return 2;
+        if (line == "add")
+            return 3;
+        if (line == "sub")
+            return 4;
+        if (line == "mul")
+            return 5;
+        if (line == "div")
+            return 6;
+        if (line == "clone")
+            return 7;
+        if (line == "print")
+            return 8;
+        return (Convert.ToInt32(line));
     }
 }

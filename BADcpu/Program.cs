@@ -376,4 +376,15 @@ static class bcisCompiler
             return 0;
         return (Convert.ToInt32(line));
     }
-}
+
+    public class IOemulator{
+
+        public void output(){
+            
+        }
+
+        public int input(){
+            return 0;
+        }
+    }
+} 
